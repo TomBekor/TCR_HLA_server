@@ -65,7 +65,8 @@ class ERGOLightning(pl.LightningModule):
         self.hla_encoder = CNN_Encoder(self.embedding_dim, self.encoding_dim,self.dropout_rate,  vocab_size=22) #
         # get train indicies for V,J etc
         if self.cat_encoding == 'embedding':
-            with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:  # 'Samples/' + self.dataset + '_train_samples.pickle'
+            # with open(self.dataset + '_train_samples.pickle', 'rb') as handle:  # 'Samples/' + self.dataset + '_train_samples.pickle'
+            with open(input_folder + 'input.pickle', 'rb') as handle:  # 'Samples/' + self.dataset + '_train_samples.pickle'
                 train = pickle.load(handle)
             df = pd.DataFrame(train)
             df['mhc'] = df['mhc'].apply(lambda x: x.split('-')[1][:1] + '*' + x.split('-')[1][1:])
@@ -314,7 +315,8 @@ class ERGOLightning(pl.LightningModule):
     @pl.data_loader
     def train_dataloader(self):
         # REQUIRED
-        with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        # with open(self.dataset + '_train_samples.pickle', 'rb') as handle:
+        with open(input_folder + 'input.pickle', 'rb') as handle:
             train = pickle.load(handle)
         df = pd.DataFrame(train)
         df['mhc'] = df['mhc'].apply(lambda x: x.split('-')[1][:1] + '*' + x.split('-')[1][1:])
@@ -328,9 +330,11 @@ class ERGOLightning(pl.LightningModule):
     def val_dataloader(self):
         # OPTIONAL
         
-        with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        # with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        with open(input_folder + 'input.pickle', 'rb') as handle:
             test = pickle.load(handle)
-        with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        # with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        with open(input_folder + 'input.pickle', 'rb') as handle:
             train = pickle.load(handle)
         df = pd.DataFrame(train)
         df['mhc'] = df['mhc'].apply(lambda x: x.split('-')[1][:1] + '*' + x.split('-')[1][1:])
@@ -375,7 +379,8 @@ class ERGODiabetes(ERGOLightning):
     @pl.data_loader
     def train_dataloader(self):
         # REQUIRED
-        with open(input_folder + self.dataset + '_train_samples.pickle', 'rb') as handle:
+        # with open(self.dataset + '_train_samples.pickle', 'rb') as handle:
+        with open(input_folder + 'input.pickle', 'rb') as handle:
             train = pickle.load(handle)
         train_dataset = DiabetesDataset(train, get_index_dicts(train), weight_factor=self.weight_factor)
         return DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=10,
