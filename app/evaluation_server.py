@@ -75,10 +75,10 @@ def run(file_pickle):
     return df
 
 
-def main():
-    df = run('final_mcpas_neg_mhc_2206_train_samples.pickle')
-    df.to_csv('output.csv')
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     df = run('final_mcpas_neg_mhc_2206_train_samples.pickle')
+#     df.to_csv('output.csv')
+#
+#
+# if __name__ == "__main__":
+#     main()
