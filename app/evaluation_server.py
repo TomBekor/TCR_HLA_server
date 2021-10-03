@@ -34,7 +34,8 @@ def Merge(dict1, dict2):
 def evaluate(hparams, model, data):
     samples = []
 
-    with open(hparams.dataset + '_train_samples.pickle', 'rb') as handle:
+    # with open(hparams.dataset + '_train_samples.pickle', 'rb') as handle:
+    with open('static/input/input.pickle', 'rb') as handle:
         train = pickle.load(handle)
 
     test_dataset = SignedPairsDataset(data, get_index_dicts(train))
